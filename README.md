@@ -4,15 +4,15 @@ Parameterized Neural Network Implementation
 This project is a simple parameterized neural network implementation. I used this for my Machine Learning Class. 
 
 ## Usage 
-_mnist_loader.py_ is used for loading data.
-_test.py_ is used for a example for using NN class
-_NN.py_ is the class for Neural Networks.
+- _mnist_loader.py_ is used for loading data.
+- _test.py_ is used for a example for using NN class
+- _NN.py_ is the class for Neural Networks.
 
 In the report, you can find my comment and our results for this implementation.
 
 ## Imports
 
-- you need to use numpy and matplotlib.pyplot
+- You need to use numpy and matplotlib.pyplot
 
 ## Dataset
 - MNIST dataset http://yann.lecun.com/exdb/mnist/ contains handwritten digits and corresponding labels. Dataset contains 60000 training and 10000 test images.
