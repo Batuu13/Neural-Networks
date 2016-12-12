@@ -12,7 +12,7 @@ In the report, you can find my comment and our results for this implementation.
 
 ## Imports
 
-- You need to use numpy and matplotlib.pyplot
+- You need to use numpy, gzip, _pickle and matplotlib.pyplot
 
 ## Dataset
 - MNIST dataset http://yann.lecun.com/exdb/mnist/ contains handwritten digits and corresponding labels. Dataset contains 60000 training and 10000 test images.
