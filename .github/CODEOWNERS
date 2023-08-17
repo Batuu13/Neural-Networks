@@ -1,0 +1,16 @@
+# Post Trade
+post_trade_team.tf                  @freetrade-io/post-trade
+post_trade_repositories.tf          @freetrade-io/post-trade
+
+# FX
+fx_team.tf                          @freetrade-io/fx
+fx_repositories.tf                  @freetrade-io/fx
+
+# Trading
+trading_repositories.tf             @freetrade-io/trading
+
+# Web
+web_repositories.tf                 @freetrade-io/web-engineers
+
+# Data
+data_repositories.tf                 @freetrade-io/data-engineering

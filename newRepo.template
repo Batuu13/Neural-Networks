@@ -1,0 +1,16 @@
+module "_repo" {
+    source = "./modules/freetrade_repository"
+
+    repository_name        = 
+    repository_description = 
+
+    allow_merge_commit = false
+    allow_squash_merge = true
+    allow_rebase_merge = true
+}
+
+resource "github_team_repository"_team" {
+    team_id    = var.engineering_team_slug
+    repository = module._repo.repository_name
+    permission = "push"
+}

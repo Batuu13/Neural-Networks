@@ -1,20 +1,27 @@
-# Neural-Networks
-Parameterized Neural Network Implementation
+# repository-manager
 
-This project is a simple parameterized neural network implementation. I used this for my Machine Learning Class. 
+## What is this repo for
 
-## Usage 
-- _mnist_loader.py_ is used for loading data.
-- _test.py_ is used for a example for using NN class
-- _NN.py_ is the class for Neural Networks.
+This repo is meant to hold all the infrastructure code for new repositories under Freetrade Limited.
 
-In the report, you can find my comment and our results for this implementation.
+Existing repositories can be migrated as needed.
 
-## Imports
+Any new github teams or memberships are no longer managed by this repository. New teams and membership are handled by a Halp request.
 
-- You need to use numpy, gzip, _pickle and matplotlib.pyplot
+Only push acess is permitted, if you require admin permissions you must raise a /halp request to be granted temporary access. See the [Notion](https://www.notion.so/freetrade/How-we-manage-Github-access-3bc0ab23b9f0421983e08d1ea8d99332) guide for more context
 
-## Dataset
-- MNIST dataset http://yann.lecun.com/exdb/mnist/ contains handwritten digits and corresponding labels. Dataset contains 60000 training and 10000 test images.
-- Dataset and the code to load it are provided to you. You can donwload them from ftp://cs.hacettepe.edu.tr/pub/dersler/BBM4XX/BBM409_ML/Assignment_3/load/. The dataset is split into three sets: Training (50000 images), test (10000 images)and validation (10000 images). You can use validation set for training (50000+10000 images).
-- When you load the dataset, you’ll see that every image is represented with [784x1] vector and has a label. You’ll use the given representation (do not have to extract new features).
+## How to deploy a new change
+
+1. Add a new repository to [repositories.tf](repositories.tf)
+2. Open a PR with the changes
+3. Comment `atlantis plan`
+4. Check the changes are what you expect
+5. If happy, ask for a review from a friend
+6. If approved, run `atlantis apply` to create the repository
+
+## Folder structure
+
+- [modules](modules) contains the modules used to encapsulate common configuration
+- [teams](teams) contains the definitions of teams in Github
+- [repositories.tf](repositories.tf) contains the definitions of repositories in Github
+- [main.tf](main.tf) contains the backend and the provider definition
