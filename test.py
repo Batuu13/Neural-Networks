@@ -1,55 +1,62 @@
+import csv
+import pymongo
+import mli_lib as mli
+import operator
+import ast
+import lda
 import numpy as np
-import mnist_loader
-import NN
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.decomposition import NMF, LatentDirichletAllocation
+import sklearn.cluster.mean_shift_ as ms
+import simplejson as json
 
-def split_data_train(raw_data):
-    d = []
-    e = []
+client = pymongo.MongoClient('localhost', 27017)
+db = client['ml']
+shops_collection = db.get_collection("shops")
+occurance = {}
 
-    for i in range(len(raw_data)):
-        d.append(raw_data[i][0])
-        e.append(raw_data[i][1])
 
-    d = np.array(d).reshape(data_size, 784)
-    e = np.array(e).reshape(data_size, 10)
-    return [d, e]
+def add_dict(topics):
+    for topic in topics:
+        for word in topic:
+            count = occurance.get(word, -1)
+            if count == -1:
+                occurance[word] = 1
+            else:
+                occurance[word] += 1
+total_review = 0 ;
+test_size = 150000
+k = 0
+i = 0
+ngram = (2,4)
+cities = ["Las Vegas", "Phoenix"]
+print(cities)
 
-def split_data_test(raw_data):
-    d = []
-    e = []
-    for i in range(len(raw_data)):
-        d.append(raw_data[i][0])
-        e.append(raw_data[i][1])
-    d = np.array(d).reshape(10000, 784)
-    e = np.array(e).reshape(10000, 1)
-    return [d, e]
+for city in cities:
+    for id in mli.get_business_id_list(20,city):
+        print("Count ",id['count'])
+        if(k >= test_size):
+            break
+        reviews = mli.get_reviews_business(id['_id'], type="neg")
+        print("#",k," ", id['_id'], len(reviews))
+        if (len(reviews) < 5):
+            print("Passed!")
+            continue
+        topics = mli.do_lda(reviews, n_features=2000, n_topics=1, maxdf=0.95, n_top_words=25, range=ngram,isSplit=1)
+        add_dict(topics[0])
+        k +=1
+        total_review += len(reviews)
 
-training_data, validation_data, test_data = mnist_loader.load_data_wrapper()
+    sorted_x = sorted(occurance.items(), key=operator.itemgetter(1), reverse=True)
+    print(sorted_x)
+    print("Total Review: ",total_review, "Ngram: " , ngram, "City: ", city)
 
-# test data is always 10K
-data_size = 25000
-batch_size = 25000
-t1 = training_data[:data_size]
-v1 = test_data[:10000]
-data = []
-expected = []
-## GET TRAINING DATA
-td, te  = split_data_test(v1)
-data, expected = split_data_train(t1)
+    toWrite = '\n\nTotal Review:' + str(total_review) +  ' - Ngram: ' + str(ngram) + ' - City: ' + city + ' \n' + str(sorted_x)
+    with open("final_results.txt", "a") as testfile:
+        testfile.write(toWrite)
+    occurance.clear()
 
-# Batches
-for k in range(int(data_size/batch_size)):
-    X = data[k*batch_size:(k+1) * batch_size]
-    y = expected[k*batch_size:(k+1) * batch_size]
 
-    neural = NN.Neural(it=300);
-    neural.fit(X,y);
-    result = neural.get_train_error();
-    test = neural.predict(td,te)
-    print(result , test)
-
-file = open("tests.txt", 'a')
-
-file.write("Train Size: {0} - Settings: {1} ".format(data_size,neural.get_settings()))
-file.write("=> Train Error: {0} - Test Error: {1}\n".format(result,test))
-file.close()
+#mli.do_nmf(reviews[:1000],n_features=2000,n_topics=1,maxdf=0.95,n_top_words=10,range=(1,3),isSplit=1)/n hellooointerface Hello {
+    test : string
+}
