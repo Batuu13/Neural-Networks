@@ -1,0 +1,16 @@
+module "batu-repo_repo" {
+    source = "./modules/freetrade_repository"
+
+    repository_name        = "batu-repo"
+    repository_description = "repo for batu"
+
+    allow_merge_commit = false
+    allow_squash_merge = true
+    allow_rebase_merge = true
+}
+
+resource "github_team_repository" "batu-repo_team" {
+    team_id    = var.engineering_team_slug
+    repository = module.batu-repo_repo.repository_name
+    permission = "push"
+}
