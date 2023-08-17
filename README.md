@@ -1,20 +1,19 @@
-# Neural-Networks
-Parameterized Neural Network Implementation
+# Machine-Likes-It
 
-This project is a simple parameterized neural network implementation. I used this for my Machine Learning Class. 
+For the dataset, you need to extract twice. Just add another ".tar" to the "yelp_dataset" file and extract again.
 
-## Usage 
-- _mnist_loader.py_ is used for loading data.
-- _test.py_ is used for a example for using NN class
-- _NN.py_ is the class for Neural Networks.
+json_to_csv_converter.py is for converting json to csv
 
-In the report, you can find my comment and our results for this implementation.
+mli_lib is our library
 
-## Imports
+test.py is for reading from csv file and write it into mongoDB.
 
-- You need to use numpy, gzip, _pickle and matplotlib.pyplot
+review_and_business_join_to_csv.py takes the csv of reviews and businesses, adds 'name', 'state' and 'city' to all reviews and writes the reviews to a .csv file.
 
-## Dataset
-- MNIST dataset http://yann.lecun.com/exdb/mnist/ contains handwritten digits and corresponding labels. Dataset contains 60000 training and 10000 test images.
-- Dataset and the code to load it are provided to you. You can donwload them from ftp://cs.hacettepe.edu.tr/pub/dersler/BBM4XX/BBM409_ML/Assignment_3/load/. The dataset is split into three sets: Training (50000 images), test (10000 images)and validation (10000 images). You can use validation set for training (50000+10000 images).
-- When you load the dataset, you’ll see that every image is represented with [784x1] vector and has a label. You’ll use the given representation (do not have to extract new features).
+**To import data to MongoDB, execute the following command:**
+mongoimport --db yelpdata --collection reviews --type csv --file reviews.csv --headerline
+
+(you may need to add MongoDB bin folder to your path, or you should execute this command at that folder)
+
+
+
